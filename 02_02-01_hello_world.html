@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Canvas tutorial</title>
+  <script>
+    function draw(){
+
+      // draw function
+      function drawScreen(){
+        // 배경화면
+        ctx.fillStyle = "#ffffaa";
+        ctx.fillRect(0,0,500,300);
+
+        // 문자
+        ctx.fillStyle = '#000000';
+        ctx.font = '20px _sans';
+        ctx.textBaseline = 'top';
+        ctx.fillText("Hello World!", 195, 80);
+
+        // 이미지
+        var helloWorldImage =new Image();
+        helloWorldImage.src = 'hello_world.gif';
+        helloWorldImage.onload = function(){
+          ctx.drawImage(helloWorldImage, 90, 130);
+        };
+
+        // 사각형
+        ctx.strokeStyle = '#ff0000';
+        ctx.strokeRect(15, 15, 470, 270);
+
+      }
+
+      // id가 turorial 인 DOM 검색
+      var canvas = document.getElementById('tutorial');
+
+      // DOM 검색 다른 방법
+      var el = document.querySelector('#tutorial');
+
+      console.log(canvas);
+      console.log(el);
+
+      // canvas 가 지원되면 2d 컨텍스트를 얻는다
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+      }
+
+      drawScreen();
+
+    }
+  </script>
+  <style>
+    canvas { border: 1px solid black; }
+  </style>
+</head>
+<body onload="draw();">
+<canvas id="tutorial" width="500" height="300">
+  Your browser does not support the canvas element.
+</canvas>
+</body>
+</html>
