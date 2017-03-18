@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Guess The Letter</title>
+
+  <script>
+
+    /**
+     * 컴퓨터가 임의로 선택한 알파벳 문자를 맞추는 게임
+     *
+     * 1. 참가자가 몇번 추측했는지 표시
+     * 2. 이미 나온 문자를 나열
+     * 3. 정답이 추측한 답보다 더 높은지 낮은지 표시( up - z / low - a )
+     *
+     */
+
+    /**
+     * 필요한 변수
+     *
+     * 1. 참가자가 문자를 누른 횟수를 담는 변수 : guesses
+     * 2. 게임 방법을 설명하는 내용을 담는 변수 : message
+     * 3. 알파벳 문자를 담는 배열 변수 : letters
+     * 4. 오늘 날짜와 시간을 담는 변수 : today
+     * 5. 정답 문자를 담는 변수 : letterToGuess
+     * 6. 참가자가 추측한 문자의 위아래 여부를 담는 변수 : higherOrLower
+     * 7. 참가자가 이미 추측했던 문자를 담는 배열 변수 : letterGuessed
+     * 8. 참가자가 이긴지 여부를 담는 변수 : gameOver
+     *
+     */
+
+    function canvasApp(){
+
+      var guesses = 0;
+      var message = 'a부터 z까지 알파벳중에 맞춰 보세요.';
+      var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+      var today = new Date();
+      var letterToGuess = '';
+      var higherOrLower = '';
+      var lettersGuessed;
+      var gameOver = false;
+      var letterIndex = 0;
+      var guessIndex = 0;
+
+      function initGame(){
+        // 임의의 문자 선택해서 변수에 넣어줌
+        letterIndex = Math.floor(Math.random() * letters.length);
+        letterToGuess = letters[letterIndex];
+
+        guesses = 0;
+        lettersGuessed = [];
+        gameOver = false;
+
+        // 키보드 눌리는 이벤트
+        window.addEventListener('keyup', eventKeyPressed, true);
+
+        // 이미지 출력 버튼 이벤트
+        var formElement = document.getElementById('createImageData');
+        formElement.addEventListener('click', createImageDataPressed, false);
+
+        drawScreen();
+      }
+
+      function eventKeyPressed(e){
+        if(!gameOver){
+          var letterPressed = String.fromCharCode(e.keyCode);
+          letterPressed = letterPressed.toLowerCase();
+          guesses++;
+          lettersGuessed.push(letterPressed);
+
+          if(letterPressed == letterToGuess){
+            gameOver = true;
+          } else {
+            letterIndex = letters.indexOf(letterToGuess);
+            guessIndex = letters.indexOf(letterPressed);
+            console.log(guessIndex);
+            if(guessIndex<0){
+              higherOrLower = '알파벳이 아닙니다.';
+            } else if(guessIndex > letterIndex){
+              higherOrLower = '아래';
+            } else {
+              higherOrLower = '위';
+            }
+          }
+
+          drawScreen();
+        }
+      }
+
+      function drawScreen(){
+        // bg
+        context.fillStyle = '#ffffaa';
+        context.fillRect(0,0,500,300);
+
+        // rect
+        context.strokeStyle = '#000000';
+        context.strokeRect(5,5,490,290);
+        context.textBaseline = 'top';
+
+        // date
+        context.fillStyle = '#000000';
+        context.font = '10px _sans';
+        context.fillText(today, 150, 10);
+
+        // message
+        context.fillStyle = '#ff0000';
+        context.font = '14px _sans';
+        context.fillText(message, 125, 30);
+
+        // guess
+        context.fillStyle = '#109910';
+        context.font = '16px _sans';
+        context.fillText('추측 : ' + guesses, 215, 50);
+
+        // lower - higher
+        context.fillStyle = '#000000';
+        context.font = '16px _sans';
+        context.fillText('위아래 : ' + higherOrLower, 150, 125);
+
+        // guessed all letter
+        context.fillStyle = '#ff0000';
+        context.font = '16px _sans';
+        context.fillText('추측한 문자들 : ' + lettersGuessed.toString(), 10, 260);
+
+        if(gameOver){
+          context.fillStyle = '#ff0000';
+          context.font = '40px _sans';
+          context.fillText('정답!!!', 150, 150);
+        }
+      }
+
+      function createImageDataPressed(){
+        window.open(theCanvas.toDataURL(), 'canvasImage', 'left=0, top=0, width=' + theCanvas.width + ',height=' + theCanvas.height + ',toolbar=0,resizable=0');
+      }
+
+      var theCanvas = document.getElementById('canvasOne');
+      var context = theCanvas.getContext('2d');
+
+      initGame();
+
+    }
+
+
+
+  </script>
+
+</head>
+<body onload="canvasApp();">
+<canvas id="canvasOne" width="500" height="300">
+  Your browser does not support the canvas element.
+</canvas>
+<form>
+  <input type="button" id="createImageData" value = "이미지출력  " />
+</form>
+</body>
+</html>

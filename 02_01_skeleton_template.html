@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Canvas tutorial</title>
+  <script>
+    function draw(){
+      // id가 turorial 인 DOM 검색
+      var canvas = document.getElementById('tutorial');
+
+      // canvas 가 지원되면 2d 컨텍스트를 얻는다
+      if (canvas.getContext){
+        var ctx = canvas.getContext('2d');
+      }
+    }
+  </script>
+  <style>
+    canvas { border: 1px solid black; }
+  </style>
+</head>
+<body onload="draw();">
+<canvas id="tutorial" width="150" height="150">
+  Your browser does not support the canvas element.
+</canvas>
+</body>
+</html>
