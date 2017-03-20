@@ -8,14 +8,14 @@
 
       // draw screen function
       function drawScreen(){
-        ctx.fillStyle = 'red';
-        ctx.fillRect(200,100,100,100);
+        var fillImg = new Image();
+        fillImg.src = 'fill_20x20.gif';
 
-        ctx.globalCompositeOperation = 'destination-in';
-
-        ctx.fillStyle = 'yellow';
-        ctx.fillRect(250,150,100,100);
-
+        fillImg.onload = function(){
+//          var fillPattern = ctx.createPattern(fillImg, 'repeat');
+          ctx.fillStyle = ctx.createPattern(fillImg, 'repeat');
+          ctx.fillRect(0,0,200,200);
+        }
       }
 
       // id가 tutorial 인 DOM 검색
