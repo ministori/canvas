@@ -5,9 +5,15 @@
   <title>Canvas tutorial</title>
   <script>
     function canvasApp(){
+
       // draw screen function
       function drawScreen(){
-
+        ctx.fillStyle = '#000000';
+        ctx.strokeStyle = '#ff00ff';
+        ctx.lineWidth = 2;
+        ctx.fillRect(10,10,40,40);
+        ctx.strokeRect(0,0,60,60);
+        ctx.clearRect(20,20,20,20);
       }
 
       // id가 turorial 인 DOM 검색

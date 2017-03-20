@@ -5,12 +5,21 @@
   <title>Canvas tutorial</title>
   <script>
     function canvasApp(){
+
       // draw screen function
       function drawScreen(){
+        ctx.beginPath();
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 5;
+        ctx.moveTo(0,0);
+        ctx.quadraticCurveTo(100,25,0,50);
 
+        // circle
+        ctx.stroke();
+        ctx.closePath();
       }
 
-      // id가 turorial 인 DOM 검색
+      // id가 tutorial 인 DOM 검색
       var canvas = document.getElementById('tutorial');
 
       // canvas 가 지원되면 2d 컨텍스트를 얻는다
@@ -26,7 +35,7 @@
   </style>
 </head>
 <body onload="canvasApp();">
-<canvas id="tutorial" width="150" height="150">
+<canvas id="tutorial" width="500" height="300">
   Your browser does not support the canvas element.
 </canvas>
 </body>

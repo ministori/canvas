@@ -5,12 +5,20 @@
   <title>Canvas tutorial</title>
   <script>
     function canvasApp(){
+
       // draw screen function
       function drawScreen(){
+        ctx.beginPath();
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 5;
+        ctx.arc(100,100,20, (Math.PI/180)*0, (Math.PI/180)*90, false);
 
+        // circle
+        ctx.stroke();
+        ctx.closePath();
       }
 
-      // id가 turorial 인 DOM 검색
+      // id가 tutorial 인 DOM 검색
       var canvas = document.getElementById('tutorial');
 
       // canvas 가 지원되면 2d 컨텍스트를 얻는다

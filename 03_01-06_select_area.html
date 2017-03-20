@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Canvas tutorial</title>
+  <script>
+    function canvasApp(){
+
+      // draw screen function
+      function drawScreen(){
+
+        // 화면에 사각형 그리기
+        ctx.fillStyle = 'black';
+        ctx.fillRect(10,10,200,200);
+        ctx.save();
+        ctx.beginPath();
+
+        // 0,0을 시작점으로 하는 가로, 세로 50인 사각형을 선택한다.
+        ctx.rect(0,0,50,50);
+        ctx.clip();
+
+        // 빨간색 원 그리기
+        ctx.beginPath();
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 5;
+        ctx.arc(100,100,100, (Math.PI/180)*0, (Math.PI/180)*360, false);
+
+        // 원 그리기
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
+
+        // 전체 캔버스를 영역으로 선택
+        ctx.beginPath();
+        ctx.rect(0,0,500,500);
+        ctx.clip();
+
+        // 빨간색 원 그리기
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.lineWidth = 5;
+        ctx.arc(100,100,50, (Math.PI/180)*0, (Math.PI/180)*360, false);
+
+        // 원 그리기
+        ctx.stroke();
+        ctx.closePath();
+
+      }
+
+      // id가 tutorial 인 DOM 검색
+      var canvas = document.getElementById('tutorial');
+
+      // canvas 가 지원되면 2d 컨텍스트를 얻는다
+      if (canvas.getContext){
+        var ctx = canvas.getContext('2d');
+      }
+
+      drawScreen();
+    }
+  </script>
+  <style>
+    canvas { border: 1px solid black; }
+  </style>
+</head>
+<body onload="canvasApp();">
+<canvas id="tutorial" width="500" height="300">
+  Your browser does not support the canvas element.
+</canvas>
+</body>
+</html>
