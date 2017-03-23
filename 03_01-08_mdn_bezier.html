@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Canvas tutorial</title>
+  <script>
+    function canvasApp(){
+
+      // draw screen function
+      function drawScreen(){
+        // Quadratric curves example
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.quadraticCurveTo(100, 0, 100, 100);
+//        ctx.quadraticCurveTo(25, 100, 50, 100);
+//        ctx.quadraticCurveTo(50, 120, 30, 125);
+//        ctx.quadraticCurveTo(60, 120, 65, 100);
+//        ctx.quadraticCurveTo(125, 100, 125, 62.5);
+//        ctx.quadraticCurveTo(125, 25, 75, 25);
+        ctx.stroke();
+
+        // Cubic curves example
+        ctx.beginPath();
+        ctx.moveTo(200, 100);
+        ctx.bezierCurveTo(300, 0, 400, 0, 500, 100);
+//        ctx.bezierCurveTo(20, 25, 20, 62.5, 20, 62.5);
+//        ctx.bezierCurveTo(20, 80, 40, 102, 75, 120);
+//        ctx.bezierCurveTo(110, 102, 130, 80, 130, 62.5);
+//        ctx.bezierCurveTo(130, 62.5, 130, 25, 100, 25);
+//        ctx.bezierCurveTo(85, 25, 75, 37, 75, 40);
+        ctx.stroke();
+      }
+
+      // id가 tutorial 인 DOM 검색
+      var canvas = document.getElementById('tutorial');
+
+      // canvas 가 지원되면 2d 컨텍스트를 얻는다
+      if (canvas.getContext){
+        var ctx = canvas.getContext('2d');
+      }
+
+      drawScreen();
+    }
+  </script>
+  <style>
+    canvas { border: 1px solid black; }
+  </style>
+</head>
+<body onload="canvasApp();">
+<canvas id="tutorial" width="500" height="300">
+  Your browser does not support the canvas element.
+</canvas>
+</body>
+</html>

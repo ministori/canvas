@@ -8,14 +8,16 @@
 
       // draw screen function
       function drawScreen(){
-        ctx.setTransform(1,0,0,1,0,0);
-        var angleInRadians = 20 * Math.PI/180;
-        ctx.rotate(angleInRadians);
-        ctx.fillStyle = 'red';
-        ctx.fillRect(100,100,50,50);
+        ctx.beginPath();
+        ctx.moveTo(75, 50);
+        ctx.lineTo(100, 75);
+        ctx.lineTo(100, 25);
 
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(0,0,50,50);
+        ctx.closePath();
+
+        ctx.stroke();
+//        ctx.fill();
+
       }
 
       // id가 tutorial 인 DOM 검색

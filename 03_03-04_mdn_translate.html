@@ -8,14 +8,16 @@
 
       // draw screen function
       function drawScreen(){
-        ctx.setTransform(1,0,0,1,0,0);
-        var angleInRadians = 20 * Math.PI/180;
-        ctx.rotate(angleInRadians);
-        ctx.fillStyle = 'red';
-        ctx.fillRect(100,100,50,50);
-
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(0,0,50,50);
+        for (var i = 0; i < 3; i++) {
+          for (var j = 0; j < 3; j++) {
+            ctx.save(); // canvas 움직이기 전 초기상태 저장
+            ctx.fillStyle = 'rgb(' + (51 * i) + ', ' + (255 - 51 * i) + ', 255)';
+            // 처음 원점을 기준으로 배치할 수 있게 됨
+            ctx.translate(10 + j * 50, 10 + i * 50);
+            ctx.fillRect(0, 0, 25, 25);
+            ctx.restore(); // canvas 초기 상태 복원
+          }
+        }
       }
 
       // id가 tutorial 인 DOM 검색

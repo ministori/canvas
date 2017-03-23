@@ -8,14 +8,20 @@
 
       // draw screen function
       function drawScreen(){
-        ctx.setTransform(1,0,0,1,0,0);
-        var angleInRadians = 20 * Math.PI/180;
-        ctx.rotate(angleInRadians);
-        ctx.fillStyle = 'red';
-        ctx.fillRect(100,100,50,50);
+        // Filled triangle
+        ctx.beginPath();
+        ctx.moveTo(25, 25);
+        ctx.lineTo(105, 25);
+        ctx.lineTo(25, 105);
+        ctx.fill();
 
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(0,0,50,50);
+        // Stroked triangle
+        ctx.beginPath();
+        ctx.moveTo(125, 125);
+        ctx.lineTo(125, 45);
+        ctx.lineTo(45, 125);
+        ctx.closePath();
+        ctx.stroke();
       }
 
       // id가 tutorial 인 DOM 검색
