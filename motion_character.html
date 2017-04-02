@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GAME</title>
+  <style>
+    canvas{
+      background:#eee;
+      border:1px solid #333;
+    }
+  </style>
+</head>
+<body onload="startGame()">
+
+<script>
+
+  // 게임 영역 기본 객체
+  var myGameArea = {
+    canvas : document.createElement('canvas'),
+    context : {},
+    interval : 0,
+    keys : [],
+    frameNo : 0,
+
+    start : function(){
+      this.canvas.width = 480;
+      this.canvas.height = 270;
+      this.context = this.canvas.getContext('2d');
+
+      document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+
+      this.interval = setInterval(updateGameArea, 20);
+
+      // 키보드 이벤트
+      window.addEventListener('keydown', function(e){
+        myGameArea.keys[e.keyCode] = true;
+      });
+
+      window.addEventListener('keyup', function(e){
+        myGameArea.keys[e.keyCode] = false;
+      });
+    },
+
+    clear : function(){
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+
+    update : function(){
+
+      this.clear();
+
+      myGamePiece.speedX = 0;
+      myGamePiece.speedY = 0;
+
+      if (this.keys && this.keys[37]) {
+        myGamePiece.speedX += -1;
+        myGamePiece.dir = 1;
+        myGamePiece.charAni(myGamePiece.dir);
+      }
+      if (this.keys && this.keys[39]) {
+        myGamePiece.speedX += 1;
+        myGamePiece.dir = -1;
+        myGamePiece.charAni(myGamePiece.dir);
+      }
+      if (this.keys && this.keys[38]) {
+        myGamePiece.speedY += -1;
+        myGamePiece.charAni(myGamePiece.dir);
+      }
+      if (this.keys && this.keys[40]) {
+        myGamePiece.speedY += 1;
+        myGamePiece.charAni(myGamePiece.dir);
+      }
+    }
+  };
+
+  // 캐릭터 객체
+  var myGamePiece;
+
+  // 캐릭터 생성자
+  function Component(width, height, color, x, y, type){
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.type = type;
+    this.dir = 1;
+    this.ctx = {};
+
+    if(this.type == 'image'){
+      this.sprite = new Image();
+      this.frameIndex = 0;
+      this.spriteFrame =
+              [0, 1, 2, 3, 4, 5, 6, 7,
+                8, 9,10,11,12,13,14,15,
+                16,17,18,19,20,21,22,23];
+      this.spriteWidth = 262;
+      this.spriteHeight = 262;
+
+      this.sprite.src = color;
+    }
+
+    this._updatePosition = function(){
+      this.x += this.speedX;
+      this.y += this.speedY;
+    };
+
+    this.update = function(){
+      this._updatePosition();
+      this.ctx = myGameArea.context;
+      if( this.type == 'image' ){
+        if(!myGameArea.keys[37] && !myGameArea.keys[39] && !myGameArea.keys[38] && !myGameArea.keys[40]){
+          this.ctx.save();
+          this.ctx.translate(this.x + this.width/2, 0);
+          this.ctx.scale(this.dir,1);
+          this.ctx.drawImage(this.sprite, 0, 0, this.spriteWidth, this.spriteHeight, -this.width/2, this.y, this.width, this.height);
+          this.ctx.restore();
+        }
+      } else {
+        this.ctx.fillStyle = color;
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
+    };
+
+    // 동작 구현
+    this.charAni = function(){
+      var sx = Math.floor(this.spriteFrame[this.frameIndex] % 8) * 262;
+      var sy = Math.floor(this.spriteFrame[this.frameIndex] / 8) * 262;
+
+      this.ctx.save();
+      this.ctx.translate(this.x + this.width/2, 0);
+      this.ctx.scale(this.dir, 1);
+      this.ctx.drawImage(this.sprite, sx, sy, this.spriteWidth, this.spriteHeight, -this.width/2, this.y, this.width, this.height);
+      this.ctx.restore();
+
+      this.frameIndex++;
+      if(this.frameIndex == this.spriteFrame.length){
+        this.frameIndex = 0;
+      }
+    }
+  }
+
+  function startGame(){
+    myGameArea.start();
+    myGamePiece = new Component(100, 100, 'http://cfile3.uf.tistory.com/image/275A984253187A1311F1EB', 50, 120, 'image');
+  }
+
+  function updateGameArea(){
+    myGameArea.update();
+    myGamePiece.update();
+  }
+
+</script>
+
+</body>
+</html>
